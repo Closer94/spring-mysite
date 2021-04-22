@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.bitacademy.mysite.exception.UserRepositoryException;
 import com.bitacademy.mysite.vo.UserVo;
 
 @Repository
@@ -115,7 +116,7 @@ public class UserRepository {
 	}
 	
 	
-	public UserVo findByEmailAndPassword(UserVo vo) {
+	public UserVo findByEmailAndPassword(UserVo vo) throws UserRepositoryException{
 		UserVo userVo = null;
 		
 		Connection conn = null;
@@ -146,7 +147,7 @@ public class UserRepository {
 		}catch (SQLException e) {
 			// 1. 사과
 			// 2. log
-			System.out.println("error: " + e);
+			throw new UserRepositoryException(e.toString());
 		} finally {
 			try {
 				// 자원 정리
