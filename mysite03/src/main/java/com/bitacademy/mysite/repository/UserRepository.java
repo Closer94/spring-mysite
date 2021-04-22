@@ -1,4 +1,4 @@
-package mysite03com.bitacademy.mysite.repository;
+package com.bitacademy.mysite.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

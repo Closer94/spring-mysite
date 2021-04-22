@@ -1,5 +1,7 @@
 package com.bitacademy.mysite.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ public class UserController {
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(UserVo vo) {
+		userService.join(vo);
 		
 		return "redirect:/user/joinsuccess";
 	}
@@ -31,5 +34,26 @@ public class UserController {
 	public String joinsuccess() {
 		
 		return "user/joinsuccess";
+	} 
+	
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String login() {
+		
+		return "user/login";
+	} 
+	
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(UserVo vo, HttpSession session) {
+		UserVo authUser = userService.getUser(vo);
+		if(authUser == null) {
+			return "redirect:/user/login?result=fail";
+		}
+		
+		
+		//세션에 로그인 한 user의 객체 정보를 set해준다.
+		session.setAttribute("authUser", authUser);
+		
+		
+		return "redirect:/";
 	} 
 }
