@@ -21,4 +21,15 @@ public class GuestbookService {
 		return list;
 	}
 
+	public void insert(GuestbookVo vo) {
+		
+		guestbookRepository.insert(vo);
+		
+	}
+
+	public void delete(GuestbookVo vo) {
+
+		guestbookRepository.delete(vo);
+	}
+
 }

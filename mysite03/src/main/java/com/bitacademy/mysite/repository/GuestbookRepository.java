@@ -25,9 +25,12 @@ public class GuestbookRepository {
 	@Autowired
 	private DataSource dataSource;
 	
-	public boolean delete(String no, String password) {
+	public boolean delete(GuestbookVo vo) {
 		boolean result = false;
 
+		int count = sqlSession.delete("guestbook.delete", vo);
+		result = count == 1;
+	/*
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -38,8 +41,8 @@ public class GuestbookRepository {
 			String sql = "delete from guestbook where no = ? and password = ?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, no);
-			pstmt.setString(2, password);
+			pstmt.setString(1, vo.getNo().toString());
+			pstmt.setString(2, vo.getPassword());
 
 			// 4. 실행
 			int count = pstmt.executeUpdate();
@@ -65,13 +68,17 @@ public class GuestbookRepository {
 				e.printStackTrace();
 			}
 		}
-
+	*/
 		return result;
 	}
 
 	public boolean insert(GuestbookVo vo) {
-		boolean result = false;
-
+		boolean result = false; 
+		int count = sqlSession.insert("guestbook.insert", vo);
+		
+		result = count == 1;		
+		
+	/*
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -110,7 +117,7 @@ public class GuestbookRepository {
 				e.printStackTrace();
 			}
 		}
-
+	*/
 		return result;
 	}
 
