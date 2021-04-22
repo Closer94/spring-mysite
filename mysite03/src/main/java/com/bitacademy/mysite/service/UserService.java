@@ -26,6 +26,10 @@ public class UserService {
 				
 		return userRepository.findByNo(no);
 	}
-	
+
+	public void updateUser(UserVo vo) {
+		userRepository.update(vo);
+	}
+
 	
 }

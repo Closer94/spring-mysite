@@ -101,7 +101,7 @@ public class UserController {
 		Long no = authUser.getNo();
 		vo.setNo(no);
 		
-		System.out.println(vo); //받은정보로 업데이트
+		userService.updateUser(vo);
 		
 		return "redirect:/user/update";
 	}

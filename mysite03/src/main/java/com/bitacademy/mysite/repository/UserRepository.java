@@ -2,8 +2,6 @@ package com.bitacademy.mysite.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -24,7 +22,13 @@ public class UserRepository {
 	@Autowired
 	private DataSource datasource;
 
-
+	public boolean update(UserVo vo) {
+		int count = sqlSession.insert("user.update", vo);
+		return count == 1;
+	}
+	
+	
+/*	
 	public boolean update(UserVo userVo, String name) {
 		// TODO Auto-generated method stub
 		boolean result = false;
@@ -70,10 +74,11 @@ public class UserRepository {
 		
 		return result;
 	}
-	
+*/	
 	public UserVo findByNo(Long no) {
-		UserVo findUser = null;
+		UserVo findUser = sqlSession.selectOne("user.find", no);
 		
+		/*
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -121,14 +126,16 @@ public class UserRepository {
 				e.printStackTrace();
 			}
 		}
-		
+		*/
 		return findUser;
 	}
 	
 	
 	public UserVo findByEmailAndPassword(UserVo vo) throws UserRepositoryException{
-		UserVo userVo = null;
+		UserVo userVo = sqlSession.selectOne("user.findByEmailAndPassword", vo);
 		
+		
+		/*
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -176,13 +183,16 @@ public class UserRepository {
 			}
 		}
 		
-		
+		*/
 		return userVo;
 	}
 	
 	public boolean insert(UserVo vo) {
+		System.out.println(vo.getNo());
 		
 		int count = sqlSession.insert("user.insert", vo);
+		
+		System.out.println(vo.getNo());
 		
 		boolean result = count == 1;
 		
