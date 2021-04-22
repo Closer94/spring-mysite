@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bitacademy.mysite.exception.UserRepositoryException;
@@ -14,6 +18,12 @@ import com.bitacademy.mysite.vo.UserVo;
 @Repository
 public class UserRepository {
 	
+	@Autowired
+	private SqlSession sqlSession;
+	
+	@Autowired
+	private DataSource datasource;
+
 
 	public boolean update(UserVo userVo, String name) {
 		// TODO Auto-generated method stub
@@ -22,7 +32,7 @@ public class UserRepository {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = datasource.getConnection();
 			
 			String sql = "update user " + 
 						"set name = ?, email = ?, password = ?, gender = ?" + 
@@ -69,7 +79,7 @@ public class UserRepository {
 		ResultSet rs = null;
 		
 		try {
-			conn = getConnection();
+			conn = datasource.getConnection();
 			
 			String sql = "select name, email, gender from user where no = ?";
 			pstmt = conn.prepareStatement(sql);
@@ -124,7 +134,7 @@ public class UserRepository {
 		ResultSet rs = null;
 		
 		try {
-			conn = getConnection();
+			conn = datasource.getConnection();
 			
 			String sql = "select no, name from user where email = ? and password = ?";
 			pstmt = conn.prepareStatement(sql);
@@ -171,12 +181,18 @@ public class UserRepository {
 	}
 	
 	public boolean insert(UserVo vo) {
+		
+		int count = sqlSession.insert("user.insert", vo);
+		
+		boolean result = count == 1;
+		
+		/*
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = datasource.getConnection();
 			
 			String sql = "insert into user" + 
 					" values(null, ?, ?, ?, ?, now());";
@@ -209,6 +225,7 @@ public class UserRepository {
 			}
 		}
 		
+		*/
 		
 		return result;
 	}
