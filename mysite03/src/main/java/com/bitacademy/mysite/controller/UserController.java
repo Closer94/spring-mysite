@@ -37,15 +37,16 @@ public class UserController {
 		
 		return "user/joinsuccess";
 	} 
-	
+
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login() {
 		
 		return "user/login";
 	} 
-	
+/*
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(UserVo vo, HttpSession session) {
+		
 		// 접근제어
 		UserVo authUser = userService.getUser(vo);
 		if(authUser == null) {
@@ -59,7 +60,7 @@ public class UserController {
 		
 		return "redirect:/";
 	} 
-	
+*/
 
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
@@ -75,6 +76,7 @@ public class UserController {
 		return "redirect:/";
 	} 
 	
+	@Auth(value="")
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(HttpSession session, Model model) {
 		// 접근제어
@@ -82,7 +84,7 @@ public class UserController {
 		if(authUser == null) {
 			return "redirect:/";
 		}
-		
+
 		Long no = authUser.getNo();
 		UserVo userVo = userService.getUser(no);
 		model.addAttribute("userVo", userVo);
