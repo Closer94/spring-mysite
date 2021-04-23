@@ -23,7 +23,7 @@
 	</context:component-scan>
 
 
-	<!-- Connection Pool DataSource-->
+	<!-- Connection Pool DataSource Bean-->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/webdb?characterEncoding=utf8&amp;serverTimezone=UTC" />
@@ -31,13 +31,13 @@
 		<property name="password" value="369369" />
 	</bean>
 	
-	<!-- MyBatis SqlSessionFactoryBean --> 
+	<!-- MyBatis SqlSessionFactory Bean --> 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
 		<property name="dataSource" ref="dataSource" /> 
 		<property name="configLocation" value="classpath:mybatis/configuration.xml" /> 
 	</bean>
 	
-	<!-- MyBatis SqlSessionTemplate --> 
+	<!-- MyBatis SqlSessionTemplate Bean--> 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
