@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bitacademy.dto.JsonResult;
 import com.bitacademy.mysite.service.UserService;
 
 @Controller("userApiController")
@@ -17,7 +18,7 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
+	/*
 	@ResponseBody
 	@RequestMapping("/existemail")
 	public Map<String, Object> existEmail(String email){
@@ -27,8 +28,23 @@ public class UserController {
 		map.put("result", "success");
 		map.put("data", result);
 				
-		
 		return map;
+	}
+	*/
+	
+	@ResponseBody
+	@RequestMapping("/existemail")
+	public JsonResult existEmail(String email){
+		Boolean result = userService.existUser(email);
+		
+//		JsonResult jsonResult = new JsonResult();
+//		jsonResult.setResult("suceess");
+//		jsonResult.setData(result);
+		
+		
+//		JsonResult.success(result); => 성공일때 static 메서드 호출
+//		JsonResult.fail(result); => 실패일때 static 메서드 호출
+		return JsonResult.success(result);
 	}
 	
 	@ResponseBody

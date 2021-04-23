@@ -8,8 +8,31 @@
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.request.contextPath }/assets/css/user.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
+<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-3.6.0.js" type="text/javascript"> </script>
+<script>
+
+$(function(){ // DOM이 모두 로딩 되고 이 함수가 실행된다. 따라서 btnCheck.length 가 1이 나온다.($function() 밖에서 length값을 구해보면 0이 나온다.)
+
+	
+	$("#btn-check").click(function(){
+		const email = $("#input-email").val();
+	
+		$.ajax({
+			url: "http://localhost:8080/mysite03/api/user/existemail?email="+email,
+			async: true, //동기, 비동기
+			data: '' , //보낼 데이터가 있을때
+			dataType: 'json', //데이터 타입
+			success: function(response){ //xmlRequest 로 요청했을때 response로 응답받음
+				console.log(response);
+			}
+		})
+				
+	});
+
+})
+
+</script>
 </head>
 <body>
 	<div id="container">
@@ -24,8 +47,8 @@
 					<label class="block-label" for="name">이름</label> 
 					<input id="name" name="name" type="text" value=""> 
 					<label class="block-label" for="email">이메일</label> 
-					<input id="email" name="email" type="text" value=""> 
-					<input type="button" value="id 중복체크"> 
+					<input id="input-email" name="email" type="text" value=""> 
+					<input id="btn-check" type="button" value="중복체크"> 
 					<label class="block-label">패스워드</label> 
 					<input name="password" type="password" value="">
 

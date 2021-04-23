@@ -31,5 +31,12 @@ public class UserService {
 		userRepository.update(vo);
 	}
 
+	public Boolean existUser(String email) {
+		UserVo userVo = userRepository.findByEmail(email);
+		
+		//검색한 email 로 userVo가 없으면 ture, 있으면 false
+		return userVo != null;
+	}
+
 	
 }
