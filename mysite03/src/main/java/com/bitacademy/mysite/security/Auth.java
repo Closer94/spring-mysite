@@ -11,6 +11,8 @@ import java.lang.annotation.Target;
 @Target({METHOD, TYPE})
 public @interface Auth {
 	
-	public String value();
+//	public String value() default "USER";
+	
+	public Role role() default Role.USER;
 	
 }
