@@ -31,7 +31,12 @@
 			   </property>
 			</bean>
 		</mvc:message-converters>
-	</mvc:annotation-driven>
+		
+		<!-- argument resolver -->
+		<mvc:argument-resolvers>
+			 <bean class="com.bitacademy.mysite.security.AuthUserHandlerMethodArgumentResolver"/>           
+		     </mvc:argument-resolvers>		
+		</mvc:annotation-driven>
 
 	<!-- Interceptors 설정 -->
 	<mvc:interceptors>
@@ -60,6 +65,7 @@
 			<mvc:exclude-mapping path="/user/logout" />
 				<bean class="com.bitacademy.mysite.security.AuthInterceptor" />
 		</mvc:interceptor>
+		
 	</mvc:interceptors>	
 
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->

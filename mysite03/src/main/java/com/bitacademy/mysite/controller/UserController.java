@@ -77,7 +77,7 @@ public class UserController {
 		session.invalidate();
 		return "redirect:/";
 	} 
-	
+	/*
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(@AuthUser UserVo authUser, Model model) {
@@ -88,9 +88,23 @@ public class UserController {
 		if(authUser == null) {
 			return "redirect:/";
 		}
-		*/
+		
 		
 		Long no = authUser.getNo();
+		UserVo userVo = userService.getUser(no);
+		model.addAttribute("userVo", userVo);
+		
+		return "user/update";
+	}
+	*/
+	
+	@Auth
+	@RequestMapping(value="/update", method=RequestMethod.GET)
+	public String update(HttpSession session, Model model) {
+		
+		// 접근제어
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+				Long no = authUser.getNo();
 		UserVo userVo = userService.getUser(no);
 		model.addAttribute("userVo", userVo);
 		
